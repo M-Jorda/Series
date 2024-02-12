@@ -1,13 +1,40 @@
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Test</title>
-</head>
-<body>
+{% extends 'base.html.twig' %}
+
+{% block title %} Test {% endblock %}
+
+{% block body %}
     <h1>Testounet</h1>
-</body>
-</html>
+    <div>
+
+        <div>{{ "now"|date('Y') }}</div>
+        <div>{{ "+1 year"|date('Y/m/d') }}</div>
+
+        {# Créé une variable #}
+        {% set name = "Guillaume" %}
+        <h2>{{ name|upper }}</h2>
+
+        {# CRéé un tableau #}
+        {% set colors = ["orange", "brown", "turquoise", "blue"] %}
+
+        <div>Nombre de couleurs : {{ colors|length }}</div>
+        <div>{{ colors|join(' /') }}</div>
+
+        {% for color in colors %}
+            <div>{{ loop.index }}</div>
+            <div style="background-color: {{ color }}">{{ color }}</div>
+            {{ loop.last }}
+        {% endfor %}
+
+        {# Un objet #}
+        {%  set book = {
+            title: 'Pifpaf',
+            year: 2000,
+            author: "John Doe"
+        } %}
+
+        <h3>{{ book.author }}</h3>
+        {% for data in book %}
+        <div><div>{{ data }}</div></div>
+        {% endfor %}
+    </div>
+{% endblock %}
