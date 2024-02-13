@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Serie;
+use App\Repository\SerieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,16 +11,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 #[Route('/series', name: 'serie_')]
 class SerieController extends AbstractController {
+
     #[Route('', name: 'list')]
-    public function list(): Response {
-        // TODO: aller chercher les séries en bdd
-        return $this->render('serie/list.html.twig', []);
+    public function list(SerieRepository $serieRepository): Response {
+        $series = $serieRepository->findBy([], ['popularity' => 'DESC', 'vote' => 'DESC'], 30, 3);
+        return $this->render('serie/list.html.twig', [
+            "series" => $series
+        ]);
     }
 
     #[Route('/details/{id}', name: 'details')]
-    public function details(int $id): Response {
-        // TODO: aller chercher les séries en bdd
-        return $this->render('serie/details.html.twig', []);
+    public function details(int $id, SerieRepository $serieRepository): Response {
+
+        $serie = $serieRepository->find($id);
+
+        return $this->render('serie/details.html.twig', [
+            "serie" => $serie
+        ]);
     }
 
     #[Route('/create', name: 'create')]
@@ -38,8 +46,8 @@ class SerieController extends AbstractController {
         $serie->setBackdrop('fsg');
         $serie->setPoster('gsfcyuh');
         $serie->setDateCreated(new \DateTime());
-        $serie->setDate(new \DateTime("- 1 year"));
-        $serie->setDateModified(new \DateTime("- 6 month"));
+        $serie->setFirstDate(new \DateTime("- 1 year"));
+        $serie->setLastDate(new \DateTime("- 6 month"));
         $serie->setGenres('drama');
         $serie->setOverview("fhudksjbhujsbvudshbfrrfvnedi");
         $serie->setPopularity(286.03);

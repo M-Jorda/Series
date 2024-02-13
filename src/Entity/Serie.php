@@ -33,7 +33,10 @@ class Serie
     private ?string $genres = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+    private ?\DateTimeInterface $first_air_date = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $last_air_date = null;
 
     #[ORM\Column(length: 255)]
     private ?string $backdrop = null;
@@ -127,14 +130,26 @@ class Serie
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getFirstDate(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->first_air_date;
     }
 
-    public function setDate(\DateTimeInterface $date): static
+    public function setFirstDate(\DateTimeInterface $date): static
     {
-        $this->date = $date;
+        $this->first_air_date = $date;
+
+        return $this;
+    }
+
+    public function getLastDate(): ?\DateTimeInterface
+    {
+        return $this->last_air_date;
+    }
+
+    public function setLastDate(\DateTimeInterface $date): static
+    {
+        $this->last_air_date = $date;
 
         return $this;
     }
