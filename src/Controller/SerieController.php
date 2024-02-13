@@ -14,7 +14,8 @@ class SerieController extends AbstractController {
 
     #[Route('', name: 'list')]
     public function list(SerieRepository $serieRepository): Response {
-        $series = $serieRepository->findBy([], ['popularity' => 'DESC', 'vote' => 'DESC'], 30, 3);
+//        $series = $serieRepository->findBy([], ['popularity' => 'DESC', 'vote' => 'DESC'], 30, 3);
+            $series = $serieRepository->findBestSeries();
         return $this->render('serie/list.html.twig', [
             "series" => $series
         ]);
