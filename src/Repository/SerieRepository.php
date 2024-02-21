@@ -50,13 +50,13 @@ class SerieRepository extends ServiceEntityRepository
 
         $query->setMaxResults(50);
 
-        $paginator = new Paginator($query);
+//        $paginator = new Paginator($query);
 
 //        $query = $entityManager->createQuery($dql);
-////        $results = $query->getOneOrNullResult();
-//        $results = $query->getResult();
+//        $results = $query->getOneOrNullResult();
+        $results = $query->getResult();
 
-        return $paginator;
+        return $results;
 }
 
 }
